@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import { AdminLayout } from '@/components/admin/AdminLayout'
 
 interface User {
@@ -33,7 +33,7 @@ export default function AdminUsersPage() {
       try {
         const {
           data: { session },
-        } = await supabase.auth.getSession()
+        } = await getSupabase().auth.getSession()
 
         if (!session) {
           router.push('/login')
@@ -90,7 +90,7 @@ export default function AdminUsersPage() {
     try {
       const {
         data: { session },
-      } = await supabase.auth.getSession()
+      } = await getSupabase().auth.getSession()
 
       if (!session) {
         router.push('/login')

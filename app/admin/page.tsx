@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import { AdminLayout } from '@/components/admin/AdminLayout'
 import { DashboardCards } from '@/components/admin/DashboardCards'
 import { ContactFilters, FilterState } from '@/components/admin/ContactFilters'
@@ -36,10 +36,10 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const init = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
+      const { data: { session } } = await getSupabase().auth.getSession()
       if (!session) { router.push('/login'); return }
 
-      const { data: profile } = await supabase
+      const { data: profile } = await getSupabase()
         .from('user_profiles')
         .select('role')
         .eq('id', session.user.id)

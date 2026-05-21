@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 export function LogoutButton() {
   const router = useRouter()
@@ -11,7 +11,7 @@ export function LogoutButton() {
   const handleLogout = async () => {
     setIsLoading(true)
     try {
-      await supabase.auth.signOut()
+      await getSupabase().auth.signOut()
       router.push('/login')
     } catch (error) {
       console.error('Logout error:', error)

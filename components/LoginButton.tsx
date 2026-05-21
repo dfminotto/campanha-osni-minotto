@@ -3,7 +3,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 export function LoginButton() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -13,17 +13,16 @@ export function LoginButton() {
     const checkSession = async () => {
       const {
         data: { session },
-      } = await supabase.auth.getSession()
+      } = await getSupabase().auth.getSession()
       setIsLoggedIn(!!session)
       setIsLoading(false)
     }
 
     checkSession()
 
-    // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
+    } = getSupabase().auth.onAuthStateChange((event, session) => {
       setIsLoggedIn(!!session)
     })
 
