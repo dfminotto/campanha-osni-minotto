@@ -90,8 +90,8 @@ export default function Home() {
             </div>
             <div className="mt-10 flex items-center gap-2">
               <span className="font-black text-white text-xl">UNIÃO</span>
-              <span className="font-black text-white md:text-[#f5a623] text-2xl">BRASIL</span>
-              <span className="font-black text-white md:text-[#f5a623] text-3xl">44</span>
+              <span className="font-black text-[#f5a623] text-2xl [-webkit-text-stroke:1px_white]">BRASIL</span>
+              <span className="font-black text-[#f5a623] text-3xl [-webkit-text-stroke:1px_white]">44</span>
             </div>
           </div>
 
