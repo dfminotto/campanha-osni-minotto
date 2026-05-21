@@ -1,7 +1,8 @@
-// app/api/admin/create-user/route.ts
 import { supabaseAdmin } from '@/lib/supabase-server'
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
+
+export const dynamic = 'force-dynamic'
 
 // Initialize Supabase for checking current user role
 const supabase = createClient(
