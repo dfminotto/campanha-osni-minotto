@@ -14,3 +14,13 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+@media (max-width: 420px) {
+  .hero-number {
+    text-shadow:
+      -1px -1px 0 white,
+       1px -1px 0 white,
+      -1px  1px 0 white,
+       1px  1px 0 white;
+  }
+}
