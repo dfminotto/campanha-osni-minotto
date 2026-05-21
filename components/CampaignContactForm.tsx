@@ -39,7 +39,10 @@ function FormInner() {
     setSuccess(false)
 
     try {
-      const recaptchaToken = executeRecaptcha ? await executeRecaptcha('campaign_contact') : ''
+      let recaptchaToken = ''
+      if (executeRecaptcha) {
+        try { recaptchaToken = await executeRecaptcha('campaign_contact') } catch { /* skip */ }
+      }
 
       const res = await fetch('/api/campaign-contact', {
         method: 'POST',
