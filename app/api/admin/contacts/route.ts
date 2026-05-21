@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
@@ -11,7 +11,7 @@ const supabaseAdmin = createClient(
   { auth: { autoRefreshToken: false, persistSession: false } }
 )
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const cookieStore = await cookies()
 
   const supabase = createServerClient(
