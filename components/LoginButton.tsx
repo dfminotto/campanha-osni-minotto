@@ -3,6 +3,7 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import type { AuthChangeEvent, Session } from '@supabase/supabase-js'
 import { getSupabase } from '@/lib/supabase'
 
 export function LoginButton() {
@@ -22,7 +23,7 @@ export function LoginButton() {
 
     const {
       data: { subscription },
-    } = getSupabase().auth.onAuthStateChange((_event, session) => {
+    } = getSupabase().auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
       setIsLoggedIn(!!session)
     })
 
