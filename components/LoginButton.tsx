@@ -22,7 +22,7 @@ export function LoginButton() {
 
     const {
       data: { subscription },
-    } = getSupabase().auth.onAuthStateChange((event, session) => {
+    } = getSupabase().auth.onAuthStateChange((_event, session) => {
       setIsLoggedIn(!!session)
     })
 
