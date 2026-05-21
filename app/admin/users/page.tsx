@@ -41,7 +41,7 @@ export default function AdminUsersPage() {
         }
 
         // Check if user is admin
-        const { data: userProfile, error: profileError } = await supabase
+        const { data: userProfile, error: profileError } = await getSupabase()
           .from('user_profiles')
           .select('role')
           .eq('id', session.user.id)
@@ -49,7 +49,7 @@ export default function AdminUsersPage() {
 
         if (!profileError && userProfile?.role === 'admin') {
           // Load all users
-          const { data: allUsers, error: usersError } = await supabase
+          const { data: allUsers, error: usersError } = await getSupabase()
             .from('user_profiles')
             .select('id, email, role, created_at')
 
@@ -122,7 +122,7 @@ export default function AdminUsersPage() {
       })
 
       // Reload users list
-      const { data: allUsers } = await supabase
+      const { data: allUsers } = await getSupabase()
         .from('user_profiles')
         .select('id, email, role, created_at')
 
