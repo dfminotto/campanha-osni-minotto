@@ -56,15 +56,15 @@ export async function POST(request: NextRequest) {
     { auth: { autoRefreshToken: false, persistSession: false } }
   )
 
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: parseInt(process.env.EMAIL_PORT || '587'),
-    secure: process.env.EMAIL_PORT === '465',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  })
+  const emailConfigured = !!process.env.EMAIL_HOST && !!process.env.EMAIL_USER && !!process.env.EMAIL_PASS
+  const transporter = emailConfigured
+    ? nodemailer.createTransport({
+        host: process.env.EMAIL_HOST,
+        port: parseInt(process.env.EMAIL_PORT || '587'),
+        secure: process.env.EMAIL_PORT === '465',
+        auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
+      })
+    : null
 
   try {
     // Reject oversized payloads before parsing JSON
@@ -189,16 +189,18 @@ export async function POST(request: NextRequest) {
       `Data: ${new Date().toLocaleString('pt-BR')}`,
     ].join('\n')
 
-    try {
-      await transporter.sendMail({
-        from: process.env.EMAIL_FROM,
-        to: process.env.CAMPAIGN_EMAIL_TO,
-        subject: `Novo contato da campanha — ${candidateName}`,
-        text: textEmail,
-        html: htmlEmail,
-      })
-    } catch (emailError) {
-      console.error('Email sending error:', emailError)
+    if (transporter) {
+      try {
+        await transporter.sendMail({
+          from: process.env.EMAIL_FROM,
+          to: process.env.CAMPAIGN_EMAIL_TO,
+          subject: `Novo contato da campanha — ${candidateName}`,
+          text: textEmail,
+          html: htmlEmail,
+        })
+      } catch (emailError) {
+        console.error('Email sending error:', emailError)
+      }
     }
 
     return NextResponse.json(
