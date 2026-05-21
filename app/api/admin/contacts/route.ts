@@ -5,12 +5,6 @@ import { cookies } from 'next/headers'
 
 export const dynamic = 'force-dynamic'
 
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  { auth: { autoRefreshToken: false, persistSession: false } }
-)
-
 export async function GET() {
   const cookieStore = await cookies()
 
@@ -29,6 +23,12 @@ export async function GET() {
   if (!session) {
     return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
   }
+
+  const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  )
 
   const { data, error } = await supabaseAdmin
     .from('campaign_contacts')
